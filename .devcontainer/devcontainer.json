@@ -1,0 +1,18 @@
+{
+    "name": "BLANK",
+    
+    // Use an prebuilt image with "image"
+    // "image":"mcr.microsoft.com/devcontainers/universal:2",
+
+    // Build image
+    "build": {
+        // Path is relative to the devcontainer.json file.
+        "dockerfile": "../Dockerfile"
+    }
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "apt update",
+
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
