@@ -6,6 +6,7 @@ Basic Features:
 
 * Based on the docker python container with minimal customizations
 
+https://containers.dev/guide/prebuild
 
 https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/setting-up-your-python-project-for-codespaces
 
