@@ -2,9 +2,8 @@
 # devcontainer-python Makefile: set up a basic Python environment
 #
 
-REPO=damonreed
-IMAGE=devcontainer-python
-TAG=latest
-
-requirements: requirements.txt
-	pip install --no-cache-dir -r ./requirements.txt
+install: requirements.txt
+	apt update
+	apt install -y iputils-ping
+	pip install --upgrade pip
+	pip install --no-cache-dir --upgrade -r ./requirements.txt
