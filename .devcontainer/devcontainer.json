@@ -2,14 +2,10 @@
     "name": "devcontainer-python",
     
     // Use an prebuilt image with "image"
-    // "image":"mcr.microsoft.com/devcontainers/universal:2",
     "image": "python",
 
-    // Build image
-    // "build": {
-    //     // Path is relative to the devcontainer.json file.
-    //     "dockerfile": "../Dockerfile"
-    // }
+    // Set remote ENV values based on local ENV values.
+    "remoteEnv": { "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}" },
 
     // Use 'postCreateCommand' to run commands after the container is created.
     "postCreateCommand": "make install"
