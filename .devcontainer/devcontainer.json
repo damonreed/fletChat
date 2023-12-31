@@ -1,5 +1,5 @@
 {
-    "name": "devcontainer-python",
+    "name": "fletChat",
     
     // Use an prebuilt image with "image"
     "image": "python",

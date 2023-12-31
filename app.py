@@ -1,11 +1,7 @@
-from flask import Flask
-app = Flask(__name__)
+import flet as ft
 
-@app.route('/')
-def hello():
-    return 'Hello, World!'
+def main(page: ft.Page):
+    # add/update controls on Page
+    pass
 
-if __name__ == '__main__':
-    app.run()
-
-
+ft.app(target=main, view=ft.AppView.WEB_BROWSER)
