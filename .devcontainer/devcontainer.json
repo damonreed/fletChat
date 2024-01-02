@@ -5,11 +5,24 @@
     "image": "python",
 
     // Set remote ENV values based on local ENV values.
-    "remoteEnv": { "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}" },
-    "remoteEnv": { "GIPHY_API_KEY": "${localEnv:GIPHY_API_KEY}" },
+    "remoteEnv": { 
+        "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}",
+        "GIPHY_API_KEY": "${localEnv:GIPHY_API_KEY}" 
+    },
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "make install"
+    "postCreateCommand": "make install",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "streetsidesoftware.code-spell-checker"
+            ]
+        }
+    }
 
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
