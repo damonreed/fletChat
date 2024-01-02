@@ -33,7 +33,7 @@ def get_random_meme():
     # Get random gif from API at https://developers.giphy.com/docs/api/endpoint#random
     response = requests.get(url="https://api.giphy.com/v1/gifs/random", params=params)
 
-    # Print json dumo of response
+    # Print json p of response
     print(response.json())
 
     # Return the URL of the random gif
@@ -63,8 +63,9 @@ def main(page: ft.Page):
         )
 
         # response = "This is a test response"
-        # status_text.value = "Working on image prompt"
-        # status_text.update()
+
+        status_text.value = "Working on image prompt"
+        status_text.update()
 
         # Populate the text response
         response_text.value = response
@@ -73,26 +74,26 @@ def main(page: ft.Page):
         sleep(1)
 
         # Use the response to generate an image prompt
-        # image_prompt = (
-        #     client.chat.completions.create(
-        #         model="gpt-4",
-        #         messages=[
-        #             {"role": "system", "content": MEMESTER_ROLE},
-        #             {
-        #                 "role": "user",
-        #                 "content": f"Create a meme from the following reply: {response}",
-        #             },
-        #         ],
-        #     )
-        #     .choices[0]
-        #     .text
-        # )
-        image_prompt = "This is a test image prompt"
+        image_prompt = (
+            client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": MEMESTER_ROLE},
+                    {
+                        "role": "user",
+                        "content": f"Create a DALL-E image prompt for a meme from the following story: {response}",
+                    },
+                ],
+            )
+            .choices[0]
+            .text
+        )
+        # image_prompt = "This is a test image prompt"
 
         meme_prompt.value = image_prompt
         meme_prompt.update()
 
-        status_text.value = "Working on image prompt"
+        status_text.value = "Working on image generation"
         status_text.update()
         sleep(1)
 
