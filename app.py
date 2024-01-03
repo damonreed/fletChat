@@ -3,6 +3,8 @@ from openai import OpenAI
 from time import sleep
 import requests
 import os
+import json
+import base64
 
 ## Static Variables
 
@@ -16,7 +18,7 @@ You try to be original, and avoid cliches. \
 You like to very occasionally make obscure and subtle references to nerd culture going back to the 70s.  \
 You use a lot of terms from the Hacker's Dictionary and the Scary Devil Monastery."
 USER_INIT = (
-    "A junior engineer has asked you to explain the difference between IPv4 and IPv6."
+    "A junior engineer has asked you to explain the difference between IPv4 and IPv6.  Give a very short answer"
 )
 MEMESTER_ROLE = "You are a meme creator. You frequent 4chan, reddit, and Know Your Meme. Your favorite memes are Bad Luck Brian and Borat."
 
@@ -33,12 +35,23 @@ def get_random_meme():
     # Get random gif from API at https://developers.giphy.com/docs/api/endpoint#random
     response = requests.get(url="https://api.giphy.com/v1/gifs/random", params=params)
 
-    # Print json p of response
-    print(response.json())
+    # Pretty print the response
+    # print(json.dumps(response.json(), indent=4, sort_keys=True))  
 
     # Return the URL of the random gif
-    return response.url
+    # return response.json()["data"]["images"]["original"]["url"]
+    return "https://i.imgflip.com/6nlb4g.jpg"
 
+# Use requests to download a png url and return a base64 encoded string
+def get_base64_image(url):
+    # Get the image from the url
+    response = requests.get(url)
+
+    # Encode the image as base64
+    base64_image = base64.b64encode(response.content).decode("utf-8")
+
+    # Return the base64 encoded image
+    return base64_image
 
 def main(page: ft.Page):
     # Function to handle submit calls
@@ -61,7 +74,7 @@ def main(page: ft.Page):
             .choices[0]
             .message.content
         )
-
+        print(response)
         # response = "This is a test response"
 
         status_text.value = "Working on image prompt"
@@ -86,10 +99,10 @@ def main(page: ft.Page):
                 ],
             )
             .choices[0]
-            .text
+            .message.content
         )
         # image_prompt = "This is a test image prompt"
-
+        print(image_prompt)
         meme_prompt.value = image_prompt
         meme_prompt.update()
 
@@ -98,23 +111,28 @@ def main(page: ft.Page):
         sleep(1)
 
         # Use the image prompt to generate an image
-        # response_image.src = (
-        #     client.images.create(
-        #         images=image_prompt,
-        #         captions=[response_text.value],
-        #         max_tokens=64,
-        #     )
-        #     .data[0]
-        #     .image_url
-        # )
-        # response_image.update()
-
-        response_image.src = get_random_meme()
+        gen_image_url = (
+            client.images.generate(
+                model="dall-e-3",
+                prompt=image_prompt,
+            )
+            .data[0]
+            .url
+        )
+        print(gen_image_url)
+        image_b64 = get_base64_image(gen_image_url)
+        response_image.src = f"data:image/png;base64,{image_b64}"
         response_image.update()
+
+        # response_image.src = get_random_meme()
+        # response_image.update()
         sleep(1)
 
         status_text.value = "Ready for input"
-
+    ##
+    ## End of submit_click function
+    ##
+        
     ## Functional Controls
 
     # Create Context UI element for system_role prompt input
@@ -159,7 +177,7 @@ def main(page: ft.Page):
     meme_prompt = ft.Text(value="Awaiting results", width=WIDTH)
 
     # Display meme image
-    response_image = ft.Image(src=get_random_meme(), width=WIDTH)
+    response_image = ft.Image(src="https://i.imgflip.com/6nlb4g.jpg", width=WIDTH)
 
     ## Layout Controls
 
