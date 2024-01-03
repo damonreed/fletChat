@@ -10,6 +10,11 @@
         "GIPHY_API_KEY": "${localEnv:GIPHY_API_KEY}" 
     },
 
+    // Set container specific settings.json values on container create.
+    "runArgs": [
+        "-e OPENAI_API_KEY -e GIPHY_API_KEY"
+    ],
+
     // Use 'postCreateCommand' to run commands after the container is created.
     "postCreateCommand": "make install",
 
